@@ -103,12 +103,21 @@ public class ResultUploader {
     public void writeSummary(PrintStream os) {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         Date now = new Date();
+        os.println("Current time in UTC | Database | Database version (?) | Benchmark | Latency distribution | "
+                + "Requests per second | Benchmark key fields");
+        // Current time in UTC
         os.println(now.getTime() / 1000L);
+        // Database type
         os.println(dbType);
+        // (seems to be database version)
         os.println(collector.collectVersion());
+        // Benchmark type
         os.println(benchType);
+        // Latency distribution
         os.println(results.latencyDistribution.toString());
+        // Requests per second
         os.println(results.getRequestsPerSecond());
+        // Benchmark key fields
         for (String field: BENCHMARK_KEY_FIELD) {
             os.println(field + "=" + expConf.getString(field));
         }
